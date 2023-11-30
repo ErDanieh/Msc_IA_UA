@@ -1,0 +1,9 @@
+c_hidden: 128
+c_in: 7
+c_out: 1
+dp_rate: 0.1
+dp_rate_linear: 0.3
+layer_name: GraphConv
+lr: 0.01
+num_layers: 2
+weight_decay: 0.001
