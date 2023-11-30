@@ -1,0 +1,13 @@
+engine.log
+__pycache__/
+build
+dist
+main.spec
+tia-engine.log
+env/
+search.log
+.DS_Store
+*.pt
+lib/models/metrics.csv
+mcts.prof
+plot.png

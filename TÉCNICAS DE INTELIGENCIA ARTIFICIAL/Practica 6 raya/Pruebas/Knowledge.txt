@@ -1,0 +1,30 @@
+Estado Inicial -> Se define en el constructor
+
+Accion(Estado) == Lista de  movimientos posibles en el juego en el turno actual
+
+Resultado(Estado, Accion) == Estado resultante de aplicar la accion al estado devolviendo el nuevo estado (board modificado)
+
+Terminal(Estado) == Devuelve True si el estado es terminal, False en caso contrario
+
+Utilidad(Estado, Jugador) == Devuelve la utilidad(Cantidad de amenazas posibles) del estado para el jugador
+
+Amenazas = Cantidad de movimientos para acabar la partida que puede hacer el siguiente jugador
+
+Heuristica 1 = Amenazas del oponente - Amenazas del jugador
+
+Heuristica 2 = (N * Amenazas del jugador) - (K * Amenazas del oponente)
+N y K estimadas con Machine Learning
+
+Heuristica 3 = Si hay 3 en raya o 2
+
+
+
+El dataset tiene 3 cosas:
+- board o estado
+- distribucion de monte Carlo
+- Reward -> Z
+
+El board viene dado:
+ -> 1 nuestro turno y -1 turno del oponente
+Despues de realizar la busqueda de monte carlo se obtiene una distribucion de probabilidad de los movimiento
+

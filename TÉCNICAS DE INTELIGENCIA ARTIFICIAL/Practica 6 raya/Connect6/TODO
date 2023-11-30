@@ -1,0 +1,6 @@
+
+- Probar heuristicas 
+- Optimizar una heuristica usando machine learning:
+   - Obtener un conjunto de datos de entrenamiento
+   - Diseñar una funcion de evaluación
+   - Entrenar la funcion del board

@@ -1,0 +1,3 @@
+/home/felix/repositories/ABConnect6/dist/main/main
+/home/felix/repositories/ConnectMore/engines/cloudict.linux
+/home/felix/repositories/ABConnect6/dist/main/main

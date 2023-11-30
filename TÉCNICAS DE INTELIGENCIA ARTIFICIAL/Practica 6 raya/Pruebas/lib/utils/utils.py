@@ -1,0 +1,1 @@
+# TODO: Aqui se encuentran todas las funciones auxiliares que no encajan en ninguna otra parte del proyecto
