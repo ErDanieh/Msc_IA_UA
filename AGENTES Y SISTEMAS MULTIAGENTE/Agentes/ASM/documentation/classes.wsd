@@ -1,0 +1,179 @@
+@startuml diagrama
+
+
+class Map {
+    +matrix tree_fields
+    +matrix plant_fields
+    +matrix water_fields
+    +float minimum
+    +grid grille
+}
+
+
+
+Map --> Tree
+Map --> Plant
+Map --> Water
+
+
+class Water {
+    +rgb color
+    +init()
+    +aspect base()
+}
+
+
+class Global {
+    +int poblacionBase
+    +float leopardMultiplier
+    +float antilopeMultiplier
+    +int init_nb_leopard
+    +int init_nb_antiloope
+    +int init_nb_plant
+    +int nb_leopard
+    +int nb_antilope
+    +int nb_plant
+    +int iterations
+    +init()
+    +reflex end1()
+}
+
+
+Global --> Animal
+Global --> Map
+Prey --> Plant
+Prey --> Tree
+
+class Animal {
+    +global int totalNaturalDeathPrey
+    +global int totalPreyBirths
+    +int age
+    +int stepsElapsed
+    +Grid position
+    +int speedMultiplier
+    +int juniorAge
+    +int matureAge
+    +int oldAge
+    +int sex
+    +bool wantReproduce
+    +int gestationTime
+    +int gestationTimeElapsed
+    +bool pregnant
+    +int hunger
+    +int thirst
+    +agent waterLocation
+    +predicate move
+    +predicate reproduce
+    +predicate drink
+    +reflex updateHungerAndThirst()
+    +reflex addStep()
+    +reflex addYear()
+    +reflex giveBirth()
+    +reflex death()
+    +action choose_target_water()
+    +action reproduction()
+    +perceive target:water()
+    +perceive target:species_of(self)
+    +plan wander intention:move()
+    +plan goDrink intention:drink()
+}
+
+
+class leopard extends Predator {
+
+}
+
+
+class Antilope extends Prey {
+}
+
+
+class Predator extends Animal {
+    +int huntSpeedMultiplier
+    +bool hunting
+    +prey target_prey
+    +list<prey> preyTargetSpecies
+    +predicate hunt_desire
+    +predicate eat_desire
+    +action choose_target_prey()
+    +reflex check_hunger()
+    +perceive target:target_prey()
+    +rule belief:hunt_desire new_desire:hunt_desire strength:5.0
+    +rule belief:eat_desire new_desire:eat_desire strength:10.0
+    +plan hunt intention:hunt_desire()
+    +plan eat intention:eat_desire()
+}
+class Prey extends Animal {
+
+    +int cyclesDead
+    +int decompositionTime
+    +image aspect_image
+    +plant target_plant
+    +predator hunter
+    +list<plant> plantSpecies
+    +predicate escape
+    +predicate eating
+    +predicate eat_desire
+    +perceive target:predator()
+    +action who_i_need_to_escape()
+    +action choose_target_plant()
+    +action food_eated()
+    +reflex check_hunger()
+    +reflex destroy()
+    +rule belief:eating new_desire:eating strength:20.0
+    +rule belief:escape new_desire:escape strength:10.0
+    +plan escaping intention:escape()
+    +plan eat_grass intention:eating()
+    +aspect base()
+}
+
+Predator --> Prey
+
+
+class Plant{
+    +float max_food
+    +float food
+    +float food_prod
+    +float color
+    +action eat()
+}
+
+class Tree {
+    +float max_food
+    +float food_prod
+    +float food
+    +string type
+    +init()
+    +aspect base()
+}
+
+
+class hyena extends Predator {
+
+}
+
+class Baboon extends Prey {
+    +action choose_home()
+    +reflex check_tree()
+    +reflex asking_home()
+    +plan wander intention:move()
+}
+
+Baboon --> Tree
+
+class Cocodrile extends Predator {
+    +int timeOutsideWater
+    +list<prey> preyTargetSpecies
+    +perceive target:water()
+    +reflex addStepOutsideWater()
+    +aspect base()
+}
+
+
+class Giraffe extends Prey {
+
+}
+
+
+
+@enduml

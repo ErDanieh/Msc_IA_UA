@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>CMG</name>
+	<comment></comment>
+	<projects>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>org.eclipse.xtext.ui.shared.xtextBuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>org.eclipse.xtext.ui.shared.xtextNature</nature>
+		<nature>msi.gama.application.gamaNature</nature>
+	</natures>
+	<linkedResources>
+		<link>
+			<name>external/Captura de pantalla 2023-11-22 a las 17.42.40.png</name>
+			<type>1</type>
+			<location>/var/folders/4h/bg12rs4d7n3c6p64vwtqhqqh0000gn/T/TemporaryItems/NSIRD_screencaptureui_rDidkT/Captura de pantalla 2023-11-22 a las 17.42.40.png</location>
+		</link>
+	</linkedResources>
+</projectDescription>

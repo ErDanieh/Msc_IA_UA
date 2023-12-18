@@ -1,0 +1,46 @@
+/**
+* Name: PredatorsAndPreys
+* Based on the internal empty template. 
+* Author: daniel
+* Tags: 
+*/
+
+
+model PredatorsAndPreys
+
+import "leopard.gaml"
+
+import "Map.gaml"
+
+import "Plant.gaml"
+
+
+
+global {
+	
+	init {
+		
+		create leopard number: 50;
+		create antilope number: 50;
+		
+		
+	}
+	
+}
+
+
+
+
+
+
+experiment PredatorsAndPreys type: gui {
+	
+	output {					
+		display view1 { 
+			grid grille border: #darkgreen;
+			species leopard aspect:base;
+			species antilope aspect:base;
+		}
+	}
+
+}

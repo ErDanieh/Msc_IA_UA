@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">&#x0A;<refactoring comment="Delete resource &apos;CMG/models/robots2.gaml&apos;" deleteContents="false" description="Delete resource &apos;CMG/models/robots2.gaml&apos;" element1="/CMG/models/robots2.gaml" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1701113997369"/>&#x0A;<refactoring comment="Delete resource &apos;Wumpus/models/PlayerAndWorld.gaml&apos;" deleteContents="false" description="Delete resource &apos;Wumpus/models/PlayerAndWorld.gaml&apos;" element1="/Wumpus/models/PlayerAndWorld.gaml" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1701119092030"/>
+</session>

@@ -1,0 +1,43 @@
+/**
+* Name: cocodrile
+* Based on the internal empty template. 
+* Author: daniel
+* Tags: 
+*/
+
+
+model cocodrile
+
+import "giraffe.gaml"
+
+import "Predator.gaml"
+
+
+global {
+	file cocodrile_aspect <- file("../includes/cocodrile.png");
+}
+
+species cocodrile parent: predator{
+	
+	int juniorAge <- 3;
+	int matureAge <- 12;
+	int oldAge <- 17;
+	
+	int gestationTime <- 400;
+	int numberOfChilds <- 1;
+	
+	int timeOutsideWater <- 15;
+	
+	
+	list<prey> preyTargetSpecies <- nil update: list(antilope);
+	
+	predicate stayOnWater <- new_predicate("stayOnWater");
+	rule belief: stayOnWater new_desire: stayOnWater strength: 110.0;
+	
+	
+	aspect base {
+	  draw cocodrile_aspect size: 3;
+	}
+	
+	
+}

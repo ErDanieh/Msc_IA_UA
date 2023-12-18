@@ -1,0 +1,25 @@
+/**
+* Name: PredatorsAndPreys
+* Based on the internal empty template. 
+* Author: daniel
+* Tags: 
+*/
+
+
+model PredatorsAndPreys
+
+global {
+	
+}
+
+species mother_species {
+    int attribute_A;
+    action action_A {}
+}
+
+species child_species parent: mother_species {
+    init {
+    attribute_A <- 5;
+    do action_A;
+    }
+}

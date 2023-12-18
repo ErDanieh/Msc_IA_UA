@@ -1,0 +1,26 @@
+/**
+* Name: antilope
+* Based on the internal empty template. 
+* Author: daniel
+* Tags: 
+*/
+
+
+model antilope
+
+/* Insert your model definition here */
+
+
+species antilope parent: animal{
+	
+	init {
+		grille maCellule <- one_of(grille);
+		location<-maCellule.location;
+
+	}
+	
+	aspect base {
+	  draw file("../includes/antilope.png") size: 3;
+	}
+	
+}

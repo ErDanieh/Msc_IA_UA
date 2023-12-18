@@ -1,0 +1,116 @@
+/**
+* Name: robots
+* Based on the internal empty template. 
+* Author: daniel
+* Tags: 
+*/
+
+
+model robots
+
+/* Insert your model definition here */
+
+global {
+	
+	int episode <- 0;
+	int displatTextSize <-2;
+	int num_agentes <- 100;
+	int iteration <- 0 update: iteration + 1;
+	int agent_size <- 1;
+	int agentsAlive <- length(ag_wander where(each.myColor!=#black)) update: length(ag_wander where(each.myColor!=#black));
+	
+
+
+	init {
+		create ag_wander number: num_agentes;
+	}
+	
+	
+	reflex end1 when: ag_wander all_match(each.myColor=#black){
+		do pause;
+	}
+	
+	reflex end1 when: iteration = 5000{
+		do pause;
+	}
+
+	
+	action restart{
+		iteration <- 0;
+		
+		ask ag_wander{
+			do die;
+		}
+		
+		create ag_wander number: num_agentes;
+		
+	}
+	
+	action hello{
+		return "HOLA";
+	}
+	
+	
+
+		
+}
+
+/**Agente que representa al mundo */
+grid gworld width: 50 height: 50 neighbors:4 {
+	rgb color <- #white;
+}
+
+
+
+
+species ag_wander skills: [moving] {
+	rgb myColor <- #red;
+	
+	action set_velocity(float vt, float vr){
+		do move speed: vt heading: vr;
+	}
+	
+	point get_closest_neighbourd_pos{
+		return agent_closest_to(self).location;
+	}
+	
+	reflex move{
+		if self.myColor != #black {
+			do move speed: 0.05 heading: heading + rnd(-5.0,5.0);
+			
+		}
+		else{
+			do move speed: 0.0 heading: heading;
+		}
+	}
+	
+	reflex collision{
+		list<ag_wander> col <- list<ag_wander>(agents at_distance(agent_size));
+		
+		ask col{
+			self.myColor <- #black;
+		}
+		
+	}
+	
+	action getCurrentPosition{
+		return location;
+	}
+	
+	aspect default{
+		draw circle(2) color: self.myColor;
+	
+	}
+}
+
+
+experiment experimento1 type: gui {
+	
+	output {
+		display view1  autosave: true {
+			grid gworld border: #black;
+			species ag_wander aspect:default;
+		}
+
+	}
+}

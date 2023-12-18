@@ -1,0 +1,15 @@
+/**
+* Name: Animal
+* Based on the internal empty template. 
+* Author: daniel
+* Tags: 
+*/
+
+
+model Animal
+
+/* Insert your model definition here */
+
+species animal skills: [moving] control: simple_bdi{
+	
+}

@@ -1,0 +1,44 @@
+/**
+* Name: PredatorsAndPreys
+* Based on the internal empty template. 
+* Author: daniel
+* Tags: 
+*/
+
+
+model PredatorsAndPreys
+
+global {
+	
+	init {
+		
+	}
+	
+}
+
+species predator skills: [moving] control: simple_bdi{
+	
+}
+
+
+species leopard parent: predator {
+
+
+}
+
+
+grid grille width: 25 height: 25 neighbors:8 {
+	rgb color <- #green;
+}
+
+
+experiment PredatorsAndPreys type: gui {
+	
+	output {					
+		display view1 { 
+			grid grille border: #darkgreen;
+			species leopard aspect:base;
+		}
+	}
+
+}

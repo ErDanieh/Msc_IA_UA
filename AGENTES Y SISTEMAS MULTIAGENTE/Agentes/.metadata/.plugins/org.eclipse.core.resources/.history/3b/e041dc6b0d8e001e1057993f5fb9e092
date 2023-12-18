@@ -1,0 +1,58 @@
+/**
+* Name: babuino
+* Based on the internal empty template. 
+* Author: pdrod
+* Tags: 
+*/
+
+
+model babuino
+import "Animal.gaml"
+import "plant.gaml"
+import "leopard.gaml"
+import "Prey.gaml"
+
+global {
+	file babuino_aspect <- file("../includes/babuino.png");
+}
+
+species babuino parent: prey{
+	int speedMultiplier <- 2;
+	int gestationTime <- 800;
+	int juniorAge <- 6;
+	int matureAge <- 18;
+	int oldAge <- 27;
+	list<agent> plantSpecies <- []update: list(tree);
+	
+	
+	plan eat_grass intention:eating {
+		if hunger>=120{
+			target_plant <- nil;
+							
+			do remove_belief(eating);
+			do remove_intention(eating, true);
+		}else{			
+			if (self distance_to target_plant<1){
+				float It_is_empty<-0.0;
+				ask target_plant as: tree {
+					It_is_empty<-food;
+				}
+				if It_is_empty>1.0{
+					hunger<-hunger+40;
+					ask target_plant as: tree {
+						do eat();
+					}
+				}else{
+					target_plant <- choose_target_plant();
+				}
+			}else{
+				do goto target: target_plant.location speed: 1.0 * speedMultiplier;
+			}
+		}
+	}
+	
+	aspect base {
+	  draw babuino_aspect size: 1;
+	}
+	
+}

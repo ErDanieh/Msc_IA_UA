@@ -1,0 +1,25 @@
+/**
+* Name: PredatorsAndPreys
+* Based on the internal empty template. 
+* Author: daniel
+* Tags: 
+*/
+
+
+model PredatorsAndPreys
+
+global {
+	
+}
+
+species predator skills: [moving] control: simple_bdi{
+	
+}
+
+
+species leopard parent: predator {
+    init {
+    attribute_A <- 5;
+    do action_A;
+    }
+}

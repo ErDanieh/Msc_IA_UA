@@ -1,0 +1,168 @@
+/**
+* Name: PredatorsAndPreys
+* Based on the internal empty template. 
+* Author: daniel
+* Tags: 
+*/
+model PredatorsAndPreys
+
+import "hyena.gaml"
+import "cocodrile.gaml"
+import "antilope.gaml"
+import "leopard.gaml"
+import "giraffe.gaml"
+import "hyena.gaml"
+import "Map.gaml"
+
+global {
+	int poblacionBase <- 25;
+	float leopardMultiplier <- 0.25; 
+	float antilopeMultiplier <- 9.5;
+	float giraffeMultiplier <- 8.5;
+	float babuinoMultiplier <- 6.0;
+	float cocodrileMultiplier <- 2.5;
+	float hyenaMultiplier <- 1.0;
+	
+	int grid_size <- 25;
+	int tree_size <- 100;
+	int water_size <- 70;
+	int plant_size <- 50;
+	
+	int predator_size <- 70;
+	int prey_size <- 70;
+	
+	int init_nb_leopard <- int(poblacionBase * leopardMultiplier);
+	int init_nb_antilope <- int(poblacionBase * antilopeMultiplier);
+	int init_nb_giraffe <- int(poblacionBase * giraffeMultiplier);
+	int init_nb_plant <- int(poblacionBase * antilopeMultiplier);
+	int init_nb_babuino <- int(poblacionBase * babuinoMultiplier);
+	int init_nb_cocodrile <- int(poblacionBase * cocodrileMultiplier);
+	int init_nb_hyena <- int(poblacionBase * hyenaMultiplier);
+	int nb_leopard -> {length(leopard)};
+	int nb_antilope -> {length(antilope)};
+	int nb_giraffe -> {length(giraffe)};
+	int nb_babuino -> {length(babuino)};
+	int nb_plant -> {length(plant)};
+	int nb_cocodrile -> {length(cocodrile)};
+	int nb_hyena -> {length(hyena)};
+	int iterations <- 0 update: iterations + 1;
+
+	init {
+		
+	}
+	
+	reflex end1 when: nb_leopard = 0 or nb_antilope = 0 {
+    	do pause;
+    }
+}
+
+/**/
+experiment PredatorsAndPreys type: gui {
+
+	init {
+	//		create simulation with:[grid_size::20, modelleft::false, id::1, nb_agents::0];
+	}
+
+	output {
+		display view1 {
+			grid grille;
+//			species antilope aspect: perception transparency: 0.5;
+			species antilope aspect: leader;
+//			species leopard aspect: perception transparency: 0.5;
+//			species babuino aspect: perception transparency: 0.5;
+//			species giraffe aspect: perception transparency: 0.5;
+//			species cocodrile aspect: perception transparency: 0.5;
+//			
+			species water aspect: base;
+			species plant aspect: base;
+			species tree aspect: base;
+			species leopard aspect: base;
+			species babuino aspect: base;
+			species antilope aspect: base;
+			species giraffe aspect: base;
+			species cocodrile aspect: base;
+			species hyena aspect: base;
+		}
+
+	}
+
+}
+
+experiment PredatorsAndPreysStats type: gui {
+	list<rgb> colors <- [rgb(31, 119, 180), rgb(255, 127, 14), rgb(44, 160, 44), rgb(214, 39, 40), rgb(148, 103, 189), rgb(140, 86, 75)];
+	
+	output {
+		display "Información del experimento" refresh: every(1 #cycles) {
+			chart "Porcentaje de población de cada animal" type: pie size: {0.25, 0.5} position: {0, 0.5} {
+				int total <- nb_leopard + nb_antilope;
+				data "Antilopes" value: nb_antilope color: colors[0];
+				data "Giraffes" value: nb_giraffe color: colors[1];
+				data "Baboons" value: nb_babuino color: colors[2];
+				data "Crocodile" value: nb_cocodrile color: colors[3];
+				data "Leopards" value: nb_leopard color: colors[4];
+				data "Hyenas" value: nb_hyena color: colors[5];
+			}
+
+			chart "Censo de Animales" type: series size: {0.5, 0.5} position: {0, 0} {
+				data "Antilopes" value: nb_antilope color: colors[0];
+				data "Giraffes" value: nb_giraffe color: colors[1];
+				data "Baboons" value: nb_babuino color: colors[2];
+				data "Crocodile" value: nb_cocodrile color: colors[3];
+				data "Leopards" value: nb_leopard color: colors[4];
+				data "Hyenas" value: nb_hyena color: colors[5];
+			}
+
+			chart "Muertes por hambre" type: series size: {0.25, 0.5} position: {0.75, 0} {
+				data "Antilopes" value: starved[0] color: colors[0];
+				data "Giraffes" value: starved[1] color: colors[1];
+				data "Baboons" value: starved[2] color: colors[2];
+				data "Crocodile" value: starved[3] color: colors[3];
+				data "Leopards" value: starved[4] color: colors[4];
+				data "Hyenas" value: starved[5] color: colors[5];
+			}
+
+			chart "Muertes por sed" type: series size: {0.25, 0.5} position: {0.5, 0} {
+				data "Antilopes" value: dehydrated[0] color: colors[0];
+				data "Giraffes" value: dehydrated[1] color: colors[1];
+				data "Baboons" value: dehydrated[2] color: colors[2];
+				data "Crocodile" value: dehydrated[3] color: colors[3];
+				data "Leopards" value: dehydrated[4] color: colors[4];
+				data "Hyenas" value: dehydrated[5] color: colors[5];
+			}
+
+			chart "Muertes naturales" type: series size: {0.25, 0.5} position: {0.75, 0.5} {
+				data "Antilopes" value: naturalDeaths[0] color: colors[0];
+				data "Giraffes" value: naturalDeaths[1] color: colors[1];
+				data "Baboons" value: naturalDeaths[2] color: colors[2];
+				data "Crocodile" value: naturalDeaths[3] color: colors[3];
+				data "Leopards" value: naturalDeaths[4] color: colors[4];
+				data "Hyenas" value: naturalDeaths[5] color: colors[5];
+			}
+
+			chart "Nacimientos" type: series size: {0.25, 0.5} position: {0.25, 0.5} {
+				data "Antilopes" value: births[0] color: colors[0];
+				data "Giraffes" value: births[1] color: colors[1];
+				data "Baboons" value: births[2] color: colors[2];
+				data "Crocodile" value: births[3] color: colors[3];
+				data "Leopards" value: births[4] color: colors[4];
+				data "Hyenas" value: births[5] color: colors[5];
+			}
+
+			chart "Caza" type: series size: {0.25, 0.5} position: {0.5, 0.5} {
+				data "Crocodile" value: huntedPrey[0] color: colors[3];
+				data "Leopards" value: huntedPrey[1] color: colors[4];
+				data "Hyenas" value: huntedPrey[2] color: colors[5];
+			}
+		}
+	}
+}
+
+experiment PSO type: batch keep_seed: false repeat: 4 until: (nb_leopard = 0 or nb_antilope = 0 or nb_giraffe = 0 or nb_babuino = 0  or nb_cocodrile = 0) { // or nb_hyena =0
+	parameter 'multiplier of antilopes' var: antilopeMultiplier min: 5.0 max: 10.0 step: 0.5;
+	parameter 'multiplier of leopards' var: leopardMultiplier min: 0.25 max: 5.0 step: 0.25;
+	parameter 'multiplier of giraffes' var: giraffeMultiplier min: 5.0 max: 10.0 step: 0.5;
+	parameter 'multiplier of baboons' var: babuinoMultiplier min: 5.0 max: 10.0 step: 0.5;
+	parameter 'multiplier of hyenas' var: hyenaMultiplier min: 0.25 max: 8.0 step: 0.25;
+	parameter 'multiplier of crocodiles' var: cocodrileMultiplier min: 0.25 max: 8.0 step: 0.25;
+	method pso num_particles: 100 iter_max: 30 maximize: iterations;
+}

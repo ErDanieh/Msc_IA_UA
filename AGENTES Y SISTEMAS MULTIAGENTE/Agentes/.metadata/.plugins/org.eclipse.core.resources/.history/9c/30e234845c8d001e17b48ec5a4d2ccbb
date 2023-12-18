@@ -1,0 +1,187 @@
+/**
+* Name: robots
+* Based on the internal empty template. 
+* Author: daniel
+* Tags: 
+*/
+model robots
+
+/* Insert your model definition here */
+global {
+	int episode <- 0;
+	int displatTextSize <- 2;
+	int num_agentes <- 40;
+	int iteration <- 0 update: iteration + 1;
+	int agent_size <- 1;
+	int agentsAlive <- length(ag_wander where (each.myColor != #black)) update: length(ag_wander where (each.myColor != #black));
+	int agentsDeath <- num_agentes - agentsAlive update: num_agentes - agentsAlive;
+	int worldSize <- 10;
+	float safeDistance <- 8.0; //4.98
+	float headingChange <- 71.71; //70.02
+	float randomVariation <- -4.6; //4.5
+	init {
+		create ag_wander number: num_agentes;
+	}
+
+	reflex end1 when: ag_wander all_match (each.myColor = #black) {
+		do pause;
+	}
+
+	reflex end1 when: iteration = 5000 {
+		do pause;
+	}
+
+	action restart {
+		iteration <- 0;
+		ask ag_wander {
+			do die;
+		}
+
+		create ag_wander number: num_agentes;
+	}
+
+	float euclideanDistance (point q, point p) {
+		return sqrt(((q.x - p.x) ^ 2) + ((q.y - p.y) ^ 2));
+	}
+
+	/**Da las posiciones de todos los agentes */
+	action get_agents_pos {
+		list<ag_wander> agentes <- agents of_generic_species (ag_wander);
+		list<point> coordenadas;
+		loop i over: agentes {
+			coordenadas <- coordenadas + i.location;
+		}
+
+		return coordenadas;
+	}
+
+	reflex applyPolicy {
+		list<ag_wander> agentes <- agents of_generic_species (ag_wander);
+		ag_wander closestAgent <- nil;
+		point myPosition <- nil;
+		
+		
+		loop ag over: agentes {
+			float head <- nil;
+			point closestAgentPosition <- nil;
+			ask ag {
+				myPosition <- ag.getCurrentPosition();
+				closestAgent <- ag.get_closest_neighbourd();
+				head <- ag.head;
+			}
+
+			if (closestAgent != nil) {
+				ask closestAgent {
+					closestAgentPosition <- getCurrentPosition();
+				}
+
+				if (euclideanDistance(myPosition, closestAgentPosition) < safeDistance) {
+				// Calcula un nuevo ángulo de dirección teniendo en cuenta la posición y movimiento del agente más cercano
+					float newHeading <- calculateAvoidanceHeading(myPosition, closestAgentPosition, head);
+					ag.head <- newHeading;
+				} else {
+				// Agrega variación aleatoria al movimiento
+					ag.head <- head - rnd(-0.5, 0.5);
+				}
+
+			}
+
+		}
+
+	}
+
+	float calculateAvoidanceHeading (point myPosition, point otherPosition, float currentHeading) {
+		float angleToOtherAgent <- atan2(otherPosition.y - myPosition.y, otherPosition.x - myPosition.x);
+		float differenceAngle <- angleToOtherAgent - currentHeading;
+
+		// Ajusta el ángulo para que esté dentro del rango [-180, 180]
+		if (differenceAngle > 180) {
+			differenceAngle <- differenceAngle - 360;
+		} else if (differenceAngle < -180) {
+			differenceAngle <- differenceAngle + 360;
+		}
+
+		// Determina si debería girar a la izquierda o a la derecha
+		float newHeading;
+		if (differenceAngle > 0) {
+			newHeading <- currentHeading - headingChange;
+		} else {
+			newHeading <- currentHeading + headingChange;
+		}
+
+		return newHeading;
+	}
+
+}
+
+species ag_wander skills: [moving] {
+	rgb myColor <- #red;
+	float velocity <- 1.0;
+	float head <- -5.0;
+
+	action set_velocity (float vt, float vr) {
+		velocity <- vt;
+		head <- vr;
+		if myColor != #black {
+			do move speed: vt heading: vr;
+		}
+
+	}
+
+	point get_closest_neighbourd_pos {
+		return agent_closest_to(self).location;
+	}
+
+	agent get_closest_neighbourd {
+		return agent_closest_to(self);
+	}
+
+	reflex move {
+		if self.myColor != #black {
+			do move speed: velocity heading: head + rnd(-0.5, 0.5);
+		} else {
+			do move speed: 0.0 heading: head;
+		}
+
+	}
+
+	reflex collision {
+		list<ag_wander> col <- list<ag_wander>(agents at_distance (agent_size));
+		ask col {
+			self.myColor <- #black;
+		}
+
+	}
+
+	point getCurrentPosition {
+		return location;
+	}
+
+	aspect default {
+		draw circle(agent_size) color: self.myColor;
+	}
+
+}
+
+/**Agente que representa al mundo */
+grid gworld width: worldSize height: worldSize neighbors: 8 {
+	rgb color <- #white;
+}
+
+experiment experimento1 type: gui {
+	output {
+		display view1 autosave: iteration = 5000 {
+			grid gworld border: #black;
+			species ag_wander aspect: default;
+		}
+
+	}
+
+}
+
+experiment PSO type: batch keep_seed: true repeat: 10 until: (time > 5000) {
+	parameter 'Save Distance' var: safeDistance min: agent_size * 2.0 max: 10.0 step: 0.1;
+	parameter 'Heading Change' var: headingChange min: 0.01 max: 90.0 step: 0.1;
+	parameter 'Random Variation' var: randomVariation min: -5.0 max: 5.0 step: 0.1;
+	method pso num_particles: 40 weight_inertia: 5 weight_cognitive: 3.5 weight_social: 8 iter_max: 10 maximize: agentsAlive;
+}

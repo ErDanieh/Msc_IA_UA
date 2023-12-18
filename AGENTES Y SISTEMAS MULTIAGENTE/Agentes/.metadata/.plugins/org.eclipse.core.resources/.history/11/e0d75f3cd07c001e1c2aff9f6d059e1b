@@ -1,0 +1,65 @@
+/**
+* Name: PredatorsAndPreys
+* Based on the internal empty template. 
+* Author: daniel
+* Tags: 
+*/
+
+
+model PredatorsAndPreys
+
+global {
+	
+	init {
+		
+		create leopard number: 10;
+		
+		
+	}
+	
+}
+
+species predator skills: [moving] control: simple_bdi{
+	
+}
+
+
+species leopard parent: predator {
+	
+	
+	aspect base {
+	  draw file("../includes/Fire.png") size: 5;
+	}
+}
+
+species prey skills: [moving] control: simple_bdi{
+	
+	
+}
+
+
+species ostriche parent: (prey predator) {
+	
+	
+	aspect base {
+	  draw file("../includes/Fire.png") size: 5;
+	}
+}
+
+
+
+grid grille width: 25 height: 25 neighbors:8 {
+	rgb color <- #green;
+}
+
+
+experiment PredatorsAndPreys type: gui {
+	
+	output {					
+		display view1 { 
+			grid grille border: #darkgreen;
+			species leopard aspect:base;
+		}
+	}
+
+}

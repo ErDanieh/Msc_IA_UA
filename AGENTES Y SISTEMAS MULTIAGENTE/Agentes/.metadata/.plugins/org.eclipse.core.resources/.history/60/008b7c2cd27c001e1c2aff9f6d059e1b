@@ -1,0 +1,28 @@
+/**
+* Name: leopard
+* Based on the internal empty template. 
+* Author: daniel
+* Tags: 
+*/
+
+
+model leopard
+
+import "Animal.gaml"
+
+/* Insert your model definition here */
+
+
+species leopard parent: animal{
+	
+	init {
+		grille maCellule <- one_of(grille);
+		location<-maCellule.location;
+
+	}
+	
+	aspect base {
+	  draw file("../includes/leopard.png") size: 3;
+	}
+	
+}

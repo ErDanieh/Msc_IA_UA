@@ -1,0 +1,52 @@
+/**
+* Name: cocodrile
+* Based on the internal empty template. 
+* Author: daniel
+* Tags: 
+*/
+model cocodrile
+
+import "water.gaml"
+import "giraffe.gaml"
+import "Predator.gaml"
+
+global {
+	file cocodrile_aspect <- file("../includes/cocodrile.png");
+}
+
+species cocodrile parent: predator {
+	int juniorAge <- 3;
+	int matureAge <- 12;
+	int oldAge <- 17;
+	int gestationTime <- 400;
+	int numberOfChilds <- 1;
+	int timeOutsideWater <- 10;
+	int thirst <- 100 min: 100 max: 100 step: 1;
+	list<prey> preyTargetSpecies <- nil update: list(antilope);
+	
+	
+	
+	perceive target:water in: 1{
+		ask myself {
+			timeOutsideWater <- 10;
+		}
+
+	}
+	
+	reflex addStepOutsideWater{
+		timeOutsideWater <- timeOutsideWater - 1;
+		if timeOutsideWater < 4 {
+			write "me seco"
+			do add_belief(drink);
+		}
+		if timeOutsideWater = 0{
+			do die;
+		}
+	}
+	
+
+	aspect base {
+		draw cocodrile_aspect size: 3;
+	}
+
+}

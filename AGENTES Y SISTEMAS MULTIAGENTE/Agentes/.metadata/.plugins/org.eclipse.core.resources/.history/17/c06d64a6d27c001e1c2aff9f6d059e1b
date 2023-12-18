@@ -1,0 +1,15 @@
+/**
+* Name: Plant
+* Based on the internal empty template. 
+* Author: daniel
+* Tags: 
+*/
+
+
+model Plant
+
+/* Insert your model definition here */
+
+species plant  control: simple_bdi{
+	
+}

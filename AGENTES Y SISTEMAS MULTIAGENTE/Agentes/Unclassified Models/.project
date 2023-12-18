@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>Unclassified Models</name>
+	<comment></comment>
+	<projects>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>org.eclipse.xtext.ui.shared.xtextBuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>org.eclipse.xtext.ui.shared.xtextNature</nature>
+		<nature>msi.gama.application.gamaNature</nature>
+	</natures>
+	<linkedResources>
+		<link>
+			<name>models/predatorPrey.gaml</name>
+			<type>1</type>
+			<location>/Applications/Gama.app/Contents/headless/samples/predatorPrey/predatorPrey.gaml</location>
+		</link>
+	</linkedResources>
+</projectDescription>

@@ -1,0 +1,206 @@
+/**
+* Name: PredatorsAndPreys
+* Based on the internal empty template. 
+* Author: daniel
+* Tags: 
+*/
+model PredatorsAndPreys
+
+import "cocodrile.gaml"
+import "antilope.gaml"
+import "leopard.gaml"
+import "giraffe.gaml"
+import "Map.gaml"
+import "babuino.gaml"
+
+global {
+	int poblacionBase <- 10;
+	float leopardMultiplier <- 0.75;
+	float antilopeMultiplier <- 9.75;
+	float giraffeMultiplier <- 1.0; //9.75;
+	float babuinoMultiplier <- 1.0; //9.75;
+	float cocodrileMultiplier <- 1.0;
+	int init_nb_leopard <- int(poblacionBase / 3 * leopardMultiplier);
+	int init_nb_antilope <- int(poblacionBase / 3 * antilopeMultiplier);
+	int init_nb_giraffe <- int(poblacionBase * giraffeMultiplier);
+	int init_nb_plant <- int(poblacionBase * antilopeMultiplier / 3);
+	int init_nb_babuino <- int(poblacionBase * babuinoMultiplier);
+	int init_nb_cocodrile <- int(poblacionBase * cocodrileMultiplier);
+	int nb_leopard -> {length(leopard)};
+	int nb_antilope -> {length(antilope)};
+	int nb_giraffe -> {length(giraffe)};
+	int nb_babuino -> {length(babuino)};
+	int nb_plant -> {length(plant)};
+	int nb_cocodrile -> {length(cocodrile)};
+	int iterations <- 0 update: iterations + 1;
+
+	init {
+		create leopard number: init_nb_leopard * 2 {
+			location <- one_of(grille).location;
+			list<water> water_areas <- list(water) where (each.location = location);
+			loop while: length(water_areas) > 0 {
+				location <- one_of(grille).location;
+				water_areas <- list(water) where (each.location = location);
+			}
+
+			age <- rnd(0, 5);
+			sex <- 1;
+			wantReproduce <- false;
+		}
+
+		create leopard number: init_nb_leopard {
+			location <- one_of(grille).location;
+			list<water> water_areas <- list(water) where (each.location = location);
+			loop while: length(water_areas) > 0 {
+				location <- one_of(grille).location;
+				water_areas <- list(water) where (each.location = location);
+			}
+
+			age <- rnd(0, 5);
+			sex <- 0;
+			wantReproduce <- false;
+		}
+
+		create antilope number: init_nb_antilope * 3 {
+			location <- one_of(grille).location;
+			list<water> water_areas <- list(water) where (each.location = location);
+			loop while: length(water_areas) > 0 {
+				location <- one_of(grille).location;
+				water_areas <- list(water) where (each.location = location);
+			}
+
+			age <- rnd(0, 5);
+			sex <- 0;
+			wantReproduce <- false;
+		}
+
+		create antilope number: init_nb_antilope * 2 {
+			location <- one_of(grille).location;
+			list<water> water_areas <- list(water) where (each.location = location);
+			loop while: length(water_areas) > 0 {
+				location <- one_of(grille).location;
+				water_areas <- list(water) where (each.location = location);
+			}
+
+			age <- rnd(0, 5);
+			sex <- 1;
+			wantReproduce <- false;
+		}
+
+		create giraffe number: init_nb_giraffe {
+			location <- one_of(grille).location;
+			age <- rnd(0, 5);
+			sex <- rnd(1);
+			wantReproduce <- false;
+		}
+
+		create babuino number: init_nb_babuino {
+			location <- one_of(tree).location;
+			list<water> water_areas <- list(water) where (each.location = location);
+			loop while: length(water_areas) > 0 {
+				location <- one_of(grille).location;
+				water_areas <- list(water) where (each.location = location);
+			}
+
+			age <- rnd(0, 5);
+			sex <- rnd(1);
+			wantReproduce <- false;
+		}
+
+		create cocodrile number: init_nb_cocodrile {
+			list<water> water_areas <- list(water) where (each.location = location);
+			location <- one_of(water).location;
+			
+			loop while: length(water_areas) > 0 {
+				location <- one_of(grille).location;
+				water_areas <- list(water) where (each.location = location);
+			}
+			age <- rnd(0, 5);
+			sex <- rnd(1);
+			wantReproduce <- true;
+		}
+
+	}
+
+	reflex end1 when: nb_leopard = 0 or nb_antilope = 0{
+		do pause;
+	}
+
+}
+
+/**/
+experiment PredatorsAndPreys type: gui {
+
+	init {
+	//		create simulation with:[grid_size::20, modelleft::false, id::1, nb_agents::0];
+	}
+
+	output {
+		display view1 {
+			grid grille;
+			species leopard aspect: perception transparency: 0.5;
+			species water aspect: base;
+			species plant aspect: base;
+			species tree aspect: base;
+			species leopard aspect: base;
+			species babuino aspect: base;
+			species antilope aspect: base;
+			species giraffe aspect: base;
+			species cocodrile aspect: base;
+		}
+
+	}
+
+}
+
+experiment PredatorsAndPreysStats type: gui {
+	output {
+		display "Información del experimento" refresh: every(1 #cycles) {
+			chart "Porcentaje de población de cada animal" type: pie size: {0.25, 0.5} position: {0, 0.5} {
+				int total <- nb_leopard + nb_antilope;
+				data "Leopards" value: nb_leopard color: #purple;
+				data "Antilopes" value: nb_antilope color: #red;
+			}
+
+			chart "Censo de Animales" type: series size: {0.5, 0.5} position: {0, 0} {
+				data "Number of Leopards" value: nb_leopard color: #purple;
+				data "Number of Antilopes" value: nb_antilope color: #red;
+			}
+
+			chart "Muertes por hambre" type: series size: {0.25, 0.5} position: {0.75, 0} {
+				data "Antilopes" value: totalAntilopeStarved color: #green;
+				data "Leopardos" value: totalLeopardStarved color: #red;
+			}
+
+			chart "Muertes por sed" type: series size: {0.25, 0.5} position: {0.5, 0} {
+				data "Antilopes" value: totalAntilopeDehydrated color: #green;
+				data "Leopardos" value: totalLeopardDehydrated color: #red;
+			}
+
+			chart "Muertes naturales" type: series size: {0.25, 0.5} position: {0.75, 0.5} {
+				data "Leopardos" value: totalNaturalDeathLeopard color: #red;
+				data "Antilopes" value: totalNaturalDeathAntilope color: #green;
+			}
+
+			chart "Nacimientos" type: series size: {0.25, 0.5} position: {0.25, 0.5} {
+				data "Antilopes" value: totalAntilopeBirths color: #green;
+				data "Leopardos" value: totalLeopardBirths color: #red;
+			}
+
+			chart "Caza" type: series size: {0.25, 0.5} position: {0.5, 0.5} {
+				data "Antilopes cazados por leopardos" value: totalHuntedPrey color: #green;
+			}
+
+		}
+
+	}
+
+}
+
+experiment PSO type: batch keep_seed: false repeat: 4 until: (nb_leopard = 0 or nb_antilope = 0) {
+	parameter 'multiplier of antilopes' var: antilopeMultiplier min: 5.0 max: 10.0 step: 0.25;
+	parameter 'multiplier of leopards' var: leopardMultiplier min: 0.25 max: 5.0 step: 0.25;
+	parameter 'multiplier of giraffe' var: giraffeMultiplier min: 0.25 max: 8.0 step: 0.25;
+	parameter 'multiplier of babuino' var: babuinoMultiplier min: 0.25 max: 8.0 step: 0.25;
+	method pso num_particles: 100 iter_max: 30 maximize: iterations;
+}

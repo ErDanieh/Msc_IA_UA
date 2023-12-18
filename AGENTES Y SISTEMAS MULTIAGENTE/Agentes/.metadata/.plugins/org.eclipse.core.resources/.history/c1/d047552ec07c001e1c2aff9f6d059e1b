@@ -1,0 +1,164 @@
+/**
+* Name: Plantilla P1 Wumpus. ASM 23/24
+* Author: Fidel
+* Tags: 
+*/
+
+model Wumpus_template
+
+global {
+	predicate move_random_desire <- new_predicate("move_random");
+	
+	init {
+		create goldArea number:1;
+		create wumpusArea number: 1;
+		create pitArea number: 4;
+		create player number:1;
+	}
+}
+
+
+grid gworld width: 25 height: 25 neighbors:4 {
+	rgb color <- #green;
+}
+
+
+/**Esto es un agente */
+species odorArea{
+	aspect base {
+	  draw square(4) color: #brown border: #black;		
+	}
+}
+
+
+/**Esto es otro agente */
+species wumpusArea{
+	init {
+		gworld place <- one_of(gworld);
+		location <- place.location;
+		
+		//Place es un cell, y por tanto puedo solicitar sus vecinos https://gama-platform.org/wiki/GridSpecies
+		list<gworld> vecinos <- [];
+		ask place {
+			vecinos <- neighbors;
+		}
+		
+		loop i over: vecinos {
+			create odorArea{
+				location <- i.location;
+			}
+		}
+	}
+	aspect base {
+	  draw square(4) color: #red border: #black;		
+	}
+}
+
+/**Esto es otro agente */
+species glitterArea{
+	aspect base {
+	  draw square(4) color: #chartreuse border: #black;		
+	}
+}
+
+/**Esto es otro agente */
+species goldArea{
+	init {
+		gworld place <- one_of(gworld);
+		location <- place.location;
+		
+		//Place es un cell, y por tanto puedo solicitar sus vecinos https://gama-platform.org/wiki/GridSpecies
+		list<gworld> vecinos <- [];
+		ask place {
+			vecinos <- neighbors;
+		}
+		
+		loop i over: vecinos {
+			create glitterArea{
+				location <- i.location;
+			}
+		}
+	
+	}
+	
+	aspect base {
+	  draw square(4) color: #yellow border: #black;		
+	}
+}
+
+
+
+
+species breezeArea{
+	aspect base {
+	  draw square(4) color: #blue border: #black;		
+	}
+}
+
+
+species pitArea{
+	init {
+		gworld place <- one_of(gworld);
+		location <- place.location;
+		
+		//Place es un cell, y por tanto puedo solicitar sus vecinos https://gama-platform.org/wiki/GridSpecies
+		list<gworld> vecinos <- [];
+		ask place {
+			vecinos <- neighbors;
+		}
+		
+		loop i over: vecinos {
+			create breezeArea{
+				location <- i.location;
+			}
+		}
+	
+	}
+	
+	aspect base {
+	  draw square(4) color: #darkblue border: #black;		
+	}
+}
+
+
+species player skills: [moving] control: simple_bdi {
+	init {
+		gworld place <- one_of(gworld);
+		location <- place.location;
+		do add_desire(move_random_desire);
+	}
+	aspect base{
+		draw circle(2) color: #purple;
+	}
+	
+	//The plan to do when the intention is to patrol.
+	plan patrolling intention:move_random_desire{
+		
+		int cell_height <-  ;
+		do wander amplitude: 10.0 speed: 2.0;
+		
+	}
+}
+
+
+
+/**Define la manera en la que se va a ejecutar */
+experiment Wumpus_experimento_1 type: gui {
+	/** Insert here the definition of the input and output of the model */
+	output {					
+		
+		/**Pantalla del experimento */
+		display view1 { 
+			grid gworld border: #darkgreen;
+			species goldArea aspect:base;
+			species pitArea aspect:base;
+			species breezeArea aspect:base;
+			species glitterArea aspect:base;
+			species wumpusArea aspect:base;
+			species odorArea aspect:base;
+			species player aspect:base;
+
+		}
+		
+	}
+}
