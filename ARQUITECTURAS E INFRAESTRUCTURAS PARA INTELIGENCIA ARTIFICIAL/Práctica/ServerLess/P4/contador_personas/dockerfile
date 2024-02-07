@@ -1,0 +1,21 @@
+FROM httpd:latest
+
+RUN apt-get update && apt-get install -y python3 python3-pip python3-venv python3-opencv
+RUN python3 -m venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
+
+RUN pip install yolov5 numpy opencv-python
+
+COPY index.html /usr/local/apache2/htdocs
+COPY not_found.html /usr/local/apache2/htdocs
+COPY script.js /usr/local/apache2/htdocs
+COPY yolov8n.pt /usr/local/apache2/htdocs
+COPY grabber.py /usr/local/apache2/htdocs
+COPY start.sh /usr/local/apache2/htdocs
+
+RUN chmod 777 /usr/local/apache2/htdocs/grabber.py
+RUN chmod +x /usr/local/apache2/htdocs/start.sh
+
+EXPOSE 80
+
+CMD ["/usr/local/apache2/htdocs/start.sh"]
