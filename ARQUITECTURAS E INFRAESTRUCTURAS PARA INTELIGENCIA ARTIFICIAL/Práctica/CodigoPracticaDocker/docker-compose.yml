@@ -1,0 +1,18 @@
+version: '3.8'
+services:
+  volumetricXGBoost:
+    image: xgboost-volumetricweight:latest
+    build: .
+    environment:
+      DEFAULT_CONVERSION_RATE: 270
+      DEFAULT_SLOPE_CORRECTION: 1.13
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50' # Limita a 50% de la CPU
+          memory: 4G   # Limita a 4 GB de RAM
+    #devices:
+      #- "/dev/nvidia0:/dev/nvidia0" # Yo no tengo GPU en mi PC, pero si la tienes, descomenta esta línea
+    ports:
+      - "7860:7860"
+    command: ["uvicorn", "api.main:app", "--host", "0.0.0.0", "--port", "7860"]
