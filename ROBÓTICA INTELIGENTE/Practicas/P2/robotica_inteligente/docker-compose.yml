@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  robotica_container:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: robotica_container
+    privileged: true
+    shm_size: 1g
+    ulimits:
+      memlock: -1
+      stack: 67108864
+    environment:
+      - DISPLAY=:0
+    user: root
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - /dev:/dev
+      - /home/daniirxch/Desktop/robotica_inteligente/src:/home/docker/catkin_ws/src
+    network_mode: host
+    stdin_open: true
+    tty: true
+    deploy:
+      resources:
+        reservations:
+          devices:
+          - driver: nvidia
+            capabilities: [gpu]
+            count: all

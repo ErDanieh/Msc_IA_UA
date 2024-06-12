@@ -1,0 +1,33 @@
+controller_list:
+  - name: gripper_controller
+    action_ns: follow_joint_trajectory
+    type: FollowJointTrajectory
+    default: True
+    joints:
+      - robotiq_finger_middle_joint_1
+      - robotiq_finger_middle_joint_2
+      - robotiq_finger_middle_joint_3
+      - robotiq_finger_1_joint_1
+      - robotiq_finger_1_joint_2
+      - robotiq_finger_1_joint_3
+      - robotiq_finger_2_joint_1
+      - robotiq_finger_2_joint_2
+      - robotiq_finger_2_joint_3
+  - name: gripper_mode_controller
+    action_ns: follow_joint_trajectory
+    type: FollowJointTrajectory
+    default: True
+    joints:
+      - robotiq_palm_finger_1_joint
+      - robotiq_palm_finger_2_joint
+  - name: arm_controller
+    action_ns: follow_joint_trajectory
+    type: FollowJointTrajectory
+    default: True
+    joints:
+      - shoulder_pan_joint
+      - shoulder_lift_joint
+      - elbow_joint
+      - wrist_1_joint
+      - wrist_2_joint
+      - wrist_3_joint

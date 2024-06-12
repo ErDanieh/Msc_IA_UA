@@ -1,0 +1,11 @@
+moveit_setup_assistant_config:
+  URDF:
+    package: experiment_settings
+    relative_path: urdf/ur5e_sim.xacro
+    xacro_args: ""
+  SRDF:
+    relative_path: config/ur5e_robot.srdf
+  CONFIG:
+    author_name: Ignacio Páez Ubieta
+    author_email: ignacio.paez@ua.es
+    generated_timestamp: 1697714240

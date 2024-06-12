@@ -1,0 +1,25 @@
+<package>
+
+  <name>robotica_inteligente</name>
+  <version>0.3.0</version>
+  <description>
+     Paquete para realizar la práctica de la asignatura Robótica Inteligente del Máster de Robótica
+  </description>
+  <author email="alejandro.olivas@ua.es">Alejandro Olivas González</author>
+  <maintainer email="alejandro.olivas@ua.es">Alejandro Olivas González</maintainer>
+
+  <license>BSD</license>
+
+  <url type="website">http://moveit.ros.org/</url>
+  <url type="bugtracker">https://github.com/ros-planning/moveit/issues</url>
+  <url type="repository">https://github.com/ros-planning/moveit</url>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <build_depend>ur5eRobotiq3f_moveit_config</build_depend>
+  <build_depend>ackermann_msg</build_depend>
+  <build_depend>geometry_msg</build_depend>
+  <build_depend>sensor_msg</build_depend>
+  <run_depend>ur5eRobotiq3f_moveit_config</run_depend>
+
+</package>

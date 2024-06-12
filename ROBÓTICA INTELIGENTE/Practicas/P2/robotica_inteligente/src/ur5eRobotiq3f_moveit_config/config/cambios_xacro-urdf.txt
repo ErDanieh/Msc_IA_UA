@@ -1,0 +1,306 @@
+1. Linea 12 -> <robotNamespace>/</robotNamespace>
+
+2. Linea 242 (ee_link no tiene inercia)->     <inertial>
+      <mass value="0.1" />
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <inertia ixx="0.03" iyy="0.03" izz="0.03" ixy="0.0" ixz="0.0" iyz="0.0" />
+    </inertial>
+ 
+3. Linea 255, 265, 275, 285, 295, 305  (todos los actuadores en gazebo necesitan la interfaz)-> <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+
+4. Linea 937 (robotiq_palm no tiene inercia) ->         <inertial>
+            <mass value="0.1" />
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <inertia ixx="0.03" iyy="0.03" izz="0.03" ixy="0.0" ixz="0.0" iyz="0.0" />
+        </inertial>
+        
+5. Linea 1025 (ur_gripper no tiene inercia) ->            <inertial>
+            <mass value="0.1" />
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <inertia ixx="0.03" iyy="0.03" izz="0.03" ixy="0.0" ixz="0.0" iyz="0.0" />
+        </inertial>
+        
+6. Linea 1058 (faltan los controladores de los dedos de la mano) ->     <transmission name="trans_robotiq_finger_1_joint_1">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="robotiq_finger_1_joint_1">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="robotiq_finger_1_joint_1_motor">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+    <transmission name="trans_robotiq_finger_1_joint_2">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="robotiq_finger_1_joint_2">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="robotiq_finger_1_joint_2_motor">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+    <transmission name="trans_robotiq_finger_1_joint_3">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="robotiq_finger_1_joint_3">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="robotiq_finger_1_joint_3_motor">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+    <transmission name="trans_robotiq_finger_2_joint_1">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="robotiq_finger_2_joint_1">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="robotiq_finger_2_joint_1_motor">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+    <transmission name="trans_robotiq_finger_2_joint_2">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="robotiq_finger_2_joint_2">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="robotiq_finger_2_joint_2_motor">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+    <transmission name="trans_robotiq_finger_2_joint_3">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="robotiq_finger_2_joint_3">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="robotiq_finger_2_joint_3_motor">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+    <transmission name="trans_robotiq_finger_middle_joint_1">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="robotiq_finger_middle_joint_1">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="robotiq_finger_middle_joint_1_motor">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+    <transmission name="trans_robotiq_finger_middle_joint_2">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="robotiq_finger_middle_joint_2">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="robotiq_finger_middle_joint_2_motor">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+    <transmission name="trans_robotiq_finger_middle_joint_3">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="robotiq_finger_middle_joint_3">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="robotiq_finger_middle_joint_3_motor">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+    <transmission name="trans_robotiq_palm_finger_1_joint">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="robotiq_palm_finger_1_joint">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="robotiq_palm_finger_1_joint_motor">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+    <transmission name="trans_robotiq_palm_finger_2_joint">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="robotiq_palm_finger_2_joint">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="robotiq_palm_finger_2_joint_motor">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+
+  <gazebo reference="robotiq_palm">
+    <material>Gazebo/Grey</material>
+    <mu1>0.2</mu1>
+    <mu2>0.2</mu2>
+  </gazebo>
+  <gazebo reference="robotiq_finger_1_link_0">
+    <material>Gazebo/Grey</material>
+    <kp>1000000.0</kp>
+    <kd>1.0</kd>
+    <mu1>30.0</mu1>
+    <mu2>30.0</mu2>
+  </gazebo>
+  <gazebo reference="robotiq_finger_1_link_1">
+    <material>Gazebo/Grey</material>
+    <kp>1000000.0</kp>
+    <kd>1.0</kd>
+    <mu1>30.0</mu1>
+    <mu2>30.0</mu2>
+  </gazebo>
+  <gazebo reference="robotiq_finger_1_link_2">
+    <material>Gazebo/Grey</material>
+    <kp>1000000.0</kp>
+    <kd>1.0</kd>
+    <mu1>30.0</mu1>
+    <mu2>30.0</mu2>
+  </gazebo>
+  <gazebo reference="robotiq_finger_1_link_3">
+    <material>Gazebo/Grey</material>
+    <kp>1000000.0</kp>
+    <kd>1.0</kd>
+    <mu1>30.0</mu1>
+    <mu2>30.0</mu2>
+  </gazebo>
+  <gazebo reference="robotiq_finger_2_link_0">
+    <material>Gazebo/Grey</material>
+    <kp>1000000.0</kp>
+    <kd>1.0</kd>
+    <mu1>30.0</mu1>
+    <mu2>30.0</mu2>
+  </gazebo>
+  <gazebo reference="robotiq_finger_2_link_1">
+    <material>Gazebo/Grey</material>
+    <kp>1000000.0</kp>
+    <kd>1.0</kd>
+    <mu1>30.0</mu1>
+    <mu2>30.0</mu2>
+  </gazebo>
+  <gazebo reference="robotiq_finger_2_link_2">
+    <material>Gazebo/Grey</material>
+    <kp>1000000.0</kp>
+    <kd>1.0</kd>
+    <mu1>30.0</mu1>
+    <mu2>30.0</mu2>
+  </gazebo>
+  <gazebo reference="robotiq_finger_2_link_3">
+    <material>Gazebo/Grey</material>
+    <kp>1000000.0</kp>
+    <kd>1.0</kd>
+    <mu1>30.0</mu1>
+    <mu2>30.0</mu2>
+  </gazebo>
+  <gazebo reference="robotiq_finger_middle_link_0">
+    <material>Gazebo/Grey</material>
+    <kp>1000000.0</kp>
+    <kd>1.0</kd>
+    <mu1>30.0</mu1>
+    <mu2>30.0</mu2>
+  </gazebo>
+  <gazebo reference="robotiq_finger_middle_link_1">
+    <material>Gazebo/Grey</material>
+    <kp>1000000.0</kp>
+    <kd>1.0</kd>
+    <mu1>30.0</mu1>
+    <mu2>30.0</mu2>
+  </gazebo>
+  <gazebo reference="robotiq_finger_middle_link_2">
+    <material>Gazebo/Grey</material>
+    <kp>1000000.0</kp>
+    <kd>1.0</kd>
+    <mu1>30.0</mu1>
+    <mu2>30.0</mu2>
+  </gazebo>
+  <gazebo reference="robotiq_finger_middle_link_3">
+    <material>Gazebo/Grey</material>
+    <kp>1000000.0</kp>
+    <kd>1.0</kd>
+    <mu1>30.0</mu1>
+    <mu2>30.0</mu2>
+  </gazebo>
+  
+7. Linea 1259 (falta dos transmisiones y la capacidad de imitacion de las articulaciones superiores) ->     <transmission name="trans_9_1">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="robotiq_finger_middle_joint_1">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor_9_1">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <transmission name="trans_7_0">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="robotiq_palm_finger_1_joint">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor_7_0">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <!-- Mimic joints -->
+
+  <gazebo>
+    <plugin filename="libgazebo_mimic_joint_plugin.so" name="mimic_robotiq_1">
+      <joint>robotiq_palm_finger_1_joint</joint>
+      <mimicJoint>robotiq_palm_finger_2_joint</mimicJoint>
+      <multiplier>-1.0</multiplier>
+      <offset>0.0</offset>
+    </plugin>
+
+    <plugin filename="libgazebo_mimic_joint_plugin.so" name="mimic_robotiq_2">
+      <joint>robotiq_finger_middle_joint_1</joint>
+      <mimicJoint>robotiq_finger_1_joint_1</mimicJoint>
+      <multiplier>1.0</multiplier>
+      <offset>0.0</offset>
+    </plugin>
+    <plugin filename="libgazebo_mimic_joint_plugin.so" name="mimic_robotiq_3">
+      <joint>robotiq_finger_middle_joint_1</joint>
+      <mimicJoint>robotiq_finger_1_joint_2</mimicJoint>
+      <multiplier>1.0</multiplier>
+      <offset>0.0</offset>
+    </plugin>
+    <plugin filename="libgazebo_mimic_joint_plugin.so" name="mimic_robotiq_4">
+      <joint>robotiq_finger_middle_joint_1</joint>
+      <mimicJoint>robotiq_finger_1_joint_3</mimicJoint>
+      <multiplier>1.0</multiplier>
+      <offset>0.0</offset>
+    </plugin>
+
+    <plugin filename="libgazebo_mimic_joint_plugin.so" name="mimic_robotiq_5">
+      <joint>robotiq_finger_middle_joint_1</joint>
+      <mimicJoint>robotiq_finger_2_joint_1</mimicJoint>
+      <multiplier>1.0</multiplier>
+      <offset>0.0</offset>
+    </plugin>
+    <plugin filename="libgazebo_mimic_joint_plugin.so" name="mimic_robotiq_6">
+      <joint>robotiq_finger_middle_joint_1</joint>
+      <mimicJoint>robotiq_finger_2_joint_2</mimicJoint>
+      <multiplier>1.0</multiplier>
+      <offset>0.0</offset>
+    </plugin>
+    <plugin filename="libgazebo_mimic_joint_plugin.so" name="mimic_robotiq_7">
+      <joint>robotiq_finger_middle_joint_1</joint>
+      <mimicJoint>robotiq_finger_2_joint_3</mimicJoint>
+      <multiplier>1.0</multiplier>
+      <offset>0.0</offset>
+    </plugin>
+
+    <plugin filename="libgazebo_mimic_joint_plugin.so" name="mimic_robotiq_8">
+      <joint>robotiq_finger_middle_joint_1</joint>
+      <mimicJoint>robotiq_finger_middle_joint_2</mimicJoint>
+      <multiplier>1.0</multiplier>
+      <offset>0.0</offset>
+    </plugin>
+    <plugin filename="libgazebo_mimic_joint_plugin.so" name="mimic_robotiq_9">
+      <joint>robotiq_finger_middle_joint_1</joint>
+      <mimicJoint>robotiq_finger_middle_joint_3</mimicJoint>
+      <multiplier>1.0</multiplier>
+      <offset>0.0</offset>
+    </plugin>
+  </gazebo>
